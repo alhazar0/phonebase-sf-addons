@@ -327,7 +327,6 @@
     "task-agent-source/drizzle/meta/_journal.json": "90cb374e093894d0efce6f1830d873a42aadd8ba49d2f024495e5cb2e1c8c303",
     "task-agent-source/eslint.config.mjs": "870f1adccecf3051cbcd9fd307cef51d7633cf510979c181a81f4b1797273493",
     "task-agent-source/mcp/server.ts": "8399e3dac727e61bb2ef51c558b99dab0d01e20c482788581bb4bfc6473e3ea2",
-    "task-agent-source/next-env.d.ts": "217ce9348b523c3e6954fb50bb93364b58781d86742c995f3a5b03ba88b9ba72",
     "task-agent-source/next.config.ts": "614bce25b089c3f19b1e17a6346c74b858034040154c6621e7d35303004767cc",
     "task-agent-source/package-lock.json": "bba08f3faa7e52c39ffb2fc93497d7ce26ef76dd147c71095a521c9866a8e6d5",
     "task-agent-source/package.json": "1dfd0ee29aaab1bad6afa0daaf41d1228d8058f83df46040ee9762f36d164243",
