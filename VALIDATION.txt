@@ -1,0 +1,11 @@
+2026-10-16 packaging validation
+
+3017 recorder: 13 tests passed, 0 failed.
+3027 task-console: 6 tests passed, 0 failed.
+Local control / perception: 258 tests passed, 0 failed.
+Total: 277 mock/unit tests passed.
+Task source npm run build succeeded; /tasks route included.
+Relative source import check: no missing imports.
+Credential pattern scan before publication: no matches.
+
+Validation used existing local node_modules via a temporary symlink; neither the symlink nor dependencies are included. No real robot motion, camera capture, provider call or new-station acceptance was performed. Recipient must install dependencies and verify local API/auth/calibration compatibility.
