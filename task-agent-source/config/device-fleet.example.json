@@ -1,0 +1,33 @@
+{
+  "devices": [
+    {
+      "id": "black-arm-01",
+      "serialPrefix": "/dev/cu.usbserial-ARM_01_TOPOLOGY",
+      "cameraIdentity": "0xARM_01_CAMERA_LOCATION",
+      "captureSize": "640x480",
+      "captureFps": 30,
+      "cameraStreamPort": 3111,
+      "driverPort": 3014
+    },
+    {
+      "id": "black-arm-02",
+      "serialPrefix": "/dev/cu.usbserial-ARM_02_TOPOLOGY",
+      "cameraIdentity": "0xARM_02_CAMERA_LOCATION",
+      "captureSize": "640x480",
+      "captureFps": 30,
+      "cameraStreamPort": 3112,
+      "profileId": "unconfigured",
+      "driverPort": 3015
+    },
+    {
+      "id": "black-arm-03",
+      "serialPrefix": "/dev/cu.usbserial-ARM_03_TOPOLOGY",
+      "cameraIdentity": "0xARM_03_CAMERA_LOCATION",
+      "captureSize": "640x480",
+      "captureFps": 30,
+      "cameraStreamPort": 3113,
+      "profileId": "unconfigured",
+      "driverPort": 3016
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <title>ScreenHand Action Recorder</title>
+    <meta name="description" content="Record and safely replay ScreenHand physical phone actions.">
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">SH</span>
+        <div>
+          <strong>Action Recorder</strong>
+          <span>ScreenHand workflow runner</span>
+        </div>
+      </div>
+      <div class="system-state">
+        <span id="systemDot" class="status-dot"></span>
+        <span id="systemText">Connecting to control plane</span>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="panel setup-panel">
+        <section>
+          <div class="section-heading">
+            <span>Device</span>
+            <button id="refreshDevices" class="text-button" type="button">Refresh</button>
+          </div>
+          <select id="deviceSelect" aria-label="ScreenHand device">
+            <option value="">Waiting for devices</option>
+          </select>
+          <div class="device-summary">
+            <div><span>Connection</span><b id="connectionValue">—</b></div>
+            <div><span>Video</span><b id="videoValue">—</b></div>
+            <div><span>Touch gate</span><b id="touchValue">—</b></div>
+            <div><span>Machine</span><b id="machineValue">—</b></div>
+          </div>
+          <p id="gateReason" class="notice">Waiting for ScreenHand status.</p>
+        </section>
+
+        <section>
+          <div class="section-heading"><span>Recording</span></div>
+          <label class="check-row">
+            <input id="executeWhileRecording" type="checkbox">
+            <span><b>Execute while recording</b><small>Controls live hardware movement only. Off keeps the arm still.</small></span>
+          </label>
+          <label class="check-row">
+            <input id="recordMouseTrajectory" type="checkbox" checked>
+            <span><b>Record mouse trajectory</b><small>Off restores touch-only recording: tap, hold, and swipe.</small></span>
+          </label>
+          <label class="recorder-pressure">Touch pressure
+            <select id="pressurePreset" aria-label="Touch pressure">
+              <option value="light">Light</option>
+              <option value="natural" selected>Normal</option>
+              <option value="firm">Firm</option>
+            </select>
+          </label>
+          <div class="button-row">
+            <button id="startRecording" class="primary" type="button">Start recording</button>
+            <button id="stopRecording" type="button" disabled>Stop</button>
+          </div>
+          <button id="clearSteps" class="wide subtle" type="button">Clear recorded steps</button>
+        </section>
+
+        <section>
+          <div class="section-heading"><span>Loop</span></div>
+          <label class="check-row compact">
+            <input id="infiniteLoop" type="checkbox" checked>
+            <span><b>Run until stopped</b></span>
+          </label>
+          <div class="field-grid">
+            <label>Iterations<input id="loopCount" type="number" min="1" max="10000" value="1" disabled></label>
+            <label>Between loops<input id="loopDelay" type="number" min="0" max="60000" value="500"><small>milliseconds</small></label>
+          </div>
+          <button id="runLoop" class="wide run" type="button">Run workflow</button>
+          <button id="stopLoop" class="wide stop" type="button" disabled>Stop loop</button>
+          <button id="emergencyHold" class="wide emergency" type="button">Emergency hold</button>
+          <p class="safety-copy">Stop loop submits no new actions. Emergency hold is immediate and latching.</p>
+        </section>
+      </aside>
+
+      <section class="phone-column">
+        <div class="phone-header">
+          <div>
+            <strong id="phoneTitle">No device selected</strong>
+            <span id="frameDetail">Waiting for live frame</span>
+          </div>
+          <div class="mode-badges">
+            <span id="recordingBadge" class="mode-badge recording" hidden>Recording</span>
+            <span id="runningBadge" class="mode-badge running" hidden>Running</span>
+          </div>
+        </div>
+        <div id="phoneStage" class="phone-stage" tabindex="0" aria-label="Live physical phone recording surface">
+          <canvas id="phoneCanvas"></canvas>
+          <div id="stageEmpty" class="stage-empty">
+            <strong>Waiting for ScreenHand video</strong>
+            <span>Select an online device to begin.</span>
+          </div>
+          <div id="mouseTracker" class="mouse-tracker" hidden aria-hidden="true">
+            <span id="mouseTrackerLabel"></span>
+          </div>
+          <div id="gesturePreview" class="gesture-preview" hidden></div>
+          <div id="stageHint" class="stage-hint">Move the mouse to preview the target. Start recording to capture actions.</div>
+        </div>
+        <div class="live-footer">
+          <span><i id="streamDot"></i><span id="streamText">Stream disconnected</span></span>
+          <span id="sequenceText">Frame —</span>
+        </div>
+      </section>
+
+      <aside class="panel workflow-panel">
+        <section class="workflow-tools">
+          <div class="section-heading"><span>Workflow</span><b id="stepCount">0 steps</b></div>
+          <input id="workflowName" aria-label="Workflow name" value="Untitled workflow" maxlength="120">
+          <div class="button-row three">
+            <button id="saveWorkflow" type="button">Save</button>
+            <button id="exportWorkflow" type="button">Export</button>
+            <button id="importWorkflow" type="button">Import</button>
+            <input id="importFile" type="file" accept="application/json" hidden>
+          </div>
+        </section>
+
+        <section class="steps-section">
+          <ol id="stepList" class="step-list"></ol>
+          <div id="stepsEmpty" class="steps-empty">
+            <strong>No recorded actions</strong>
+            <span>Mouse paths and touch actions will appear here in execution order.</span>
+          </div>
+        </section>
+
+        <section class="activity-section">
+          <div class="section-heading"><span>Activity</span><button id="clearLog" class="text-button" type="button">Clear</button></div>
+          <div id="activityLog" class="activity-log" aria-live="polite"></div>
+        </section>
+      </aside>
+    </main>
+
+    <div id="toast" class="toast" hidden></div>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
